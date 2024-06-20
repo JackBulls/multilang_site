@@ -6,6 +6,10 @@
 </head>
 <body>
     <h1>{% trans "List of Articles" %}</h1>
+    <div>
+        <a href="{% url 'change_language' 'en' %}">English</a> |
+        <a href="{% url 'change_language' 'fr' %}">Français</a>
+    </div>
     <ul>
         {% for article in articles %}
             <li>
@@ -17,4 +21,5 @@
     </ul>
 </body>
 </html>
+
 
