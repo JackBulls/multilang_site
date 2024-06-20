@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>{% trans "Articles" %}</title>
+    <script>
+        async function searchArticles() {
+            const query = document.getElementById("searchQuery").value;
+            const response = await fetch(`/search_articles/?query=${query}`);
+            const results = await response.json();
+            let output = '<ul>';
+            results.forEach(result => {
+                output += `<li><h2>${result._source.title}</h2><p>${result._source.content}</p><small>${result._source.publication_date}</small></li>`;
+            });
+            output += '</ul>';
+            document.getElementById("searchResults").innerHTML = output;
+        }
+    </script>
 </head>
 <body>
     <h1>{% trans "List of Articles" %}</h1>
@@ -10,6 +23,9 @@
         <a href="{% url 'change_language' 'en' %}">English</a> |
         <a href="{% url 'change_language' 'fr' %}">Français</a>
     </div>
+    <input type="text" id="searchQuery" placeholder="{% trans "Type your query here" %}">
+    <button onclick="searchArticles()">{% trans "Search" %}</button>
+    <div id="searchResults"></div>
     <ul>
         {% for article in articles %}
             <li>
@@ -21,5 +37,3 @@
     </ul>
 </body>
 </html>
-
-

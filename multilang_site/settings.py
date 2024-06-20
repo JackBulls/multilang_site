@@ -101,6 +101,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# OpenAI 
+OPENAI_API_KEY = 'clé_api_openai'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
