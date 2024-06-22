@@ -62,4 +62,20 @@ def search_articles(request):
         }
     }
     results = search_document('articles', search_query)
-    return JsonResponse(results['hits']['hits'], safe=False)
+
+    augmented_results = []
+    for result in results['hits']['hits']:
+        augmented_content = openai.Completion.create(
+            engine="davinci-codex",
+            prompt=f"Summarize this article: {result['_source']['content']}",
+            max_tokens=150
+        ).choices[0].text.strip()
+
+        augmented_results.append({
+            'title': result['_source']['title'],
+            'content': result['_source']['content'],
+            'augmented_content': augmented_content,
+            'publication_date': result['_source']['publication_date']
+        })
+
+    return JsonResponse(augmented_results, safe=False)

@@ -10,7 +10,7 @@
             const results = await response.json();
             let output = '<ul>';
             results.forEach(result => {
-                output += `<li><h2>${result._source.title}</h2><p>${result._source.content}</p><small>${result._source.publication_date}</small></li>`;
+                output += `<li><h2>${result.title}</h2><p>${result.content}</p><p><strong>Augmented:</strong> ${result.augmented_content}</p><small>${result.publication_date}</small></li>`;
             });
             output += '</ul>';
             document.getElementById("searchResults").innerHTML = output;
@@ -23,9 +23,14 @@
         <a href="{% url 'change_language' 'en' %}">English</a> |
         <a href="{% url 'change_language' 'fr' %}">Français</a>
     </div>
-    <input type="text" id="searchQuery" placeholder="{% trans "Type your query here" %}">
+    <input type="text" id="searchQuery" placeholder='{% trans "Type your query here" %}'>
     <button onclick="searchArticles()">{% trans "Search" %}</button>
     <div id="searchResults"></div>
+    <hr>
+    <h2>{% trans "Chat with our Bot" %}</h2>
+    <input type="text" id="userMessage" placeholder='{% trans "Type your message here" %}'>
+    <button onclick="sendMessage()">{% trans "Send" %}</button>
+    <p id="chatbotResponse"></p>
     <ul>
         {% for article in articles %}
             <li>
@@ -37,3 +42,4 @@
     </ul>
 </body>
 </html>
+
