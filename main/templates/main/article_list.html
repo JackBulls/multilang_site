@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% trans "Articles" %}</title>
+    <!-- {% load i18n %} : Ce tag charge les tags de traduction dans le template -->
+    <!-- {% trans "Articles" %} : Traduit le mot "Articles" en fonction de la langue sélectionnée -->
+    <title>{% load i18n %}{% trans "Articles" %}</title>
     <script>
+        // Fonction JavaScript pour effectuer une recherche d'articles
         async function searchArticles() {
             const query = document.getElementById("searchQuery").value;
             const response = await fetch(`/search_articles/?query=${query}`);
@@ -18,19 +21,28 @@
     </script>
 </head>
 <body>
+    <!-- Titre principal de la page -->
     <h1>{% trans "List of Articles" %}</h1>
+
+    <!-- Liens pour changer la langue de l'interface -->
     <div>
         <a href="{% url 'change_language' 'en' %}">English</a> |
         <a href="{% url 'change_language' 'fr' %}">Français</a>
     </div>
+
+    <!-- Barre de recherche pour trouver des articles -->
     <input type="text" id="searchQuery" placeholder='{% trans "Type your query here" %}'>
     <button onclick="searchArticles()">{% trans "Search" %}</button>
     <div id="searchResults"></div>
     <hr>
+
+    <!-- Section pour interagir avec le chatbot -->
     <h2>{% trans "Chat with our Bot" %}</h2>
     <input type="text" id="userMessage" placeholder='{% trans "Type your message here" %}'>
     <button onclick="sendMessage()">{% trans "Send" %}</button>
     <p id="chatbotResponse"></p>
+
+    <!-- Liste des articles récupérés de la base de données -->
     <ul>
         {% for article in articles %}
             <li>
@@ -40,6 +52,8 @@
             </li>
         {% endfor %}
     </ul>
+
+    <!-- Lien pour revenir à la page d'accueil -->
+    <a href="{% url 'home' %}">{% trans "Back to Home" %}</a>
 </body>
 </html>
-

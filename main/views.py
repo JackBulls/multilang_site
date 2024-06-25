@@ -12,10 +12,14 @@ openai.api_key = settings.OPENAI_API_KEY
 
 @csrf_exempt
 def chatbot(request):
+    
+    # Gère les requêtes du chatbot. Accepte une requête POST contenant un message utilisateur,
+    # génère une réponse à l'aide de l'API GPT-3 et renvoie la réponse.
     if request.method == 'POST':
         data = json.loads(request.body)
         user_input = data.get('message', '')
 
+        # Appel à l'API GPT-3 pour générer une réponse
         response = openai.Completion.create(
             engine="davinci-codex",
             prompt=user_input,
@@ -31,6 +35,7 @@ def article_list(request):
     context = {
         'articles': articles
     }
+    # accès à la page article
     return render(request, 'main/article_list.html', context)
 
 def change_language(request, language):
@@ -52,6 +57,9 @@ def index_articles(request):
     return JsonResponse({'message': 'Articles indexed successfully'})
 
 def search_articles(request):
+    
+    # Gère les requêtes de recherche. Accepte une requête GET avec une query,
+    # recherche les articles correspondants dans Elasticsearch et renvoie les résultats augmentés par IA.
     query = request.GET.get('query', '')
     search_query = {
         'query': {
@@ -62,7 +70,7 @@ def search_articles(request):
         }
     }
     results = search_document('articles', search_query)
-
+    # Augmente les résultats de la recherche avec GPT-3
     augmented_results = []
     for result in results['hits']['hits']:
         augmented_content = openai.Completion.create(
@@ -79,3 +87,7 @@ def search_articles(request):
         })
 
     return JsonResponse(augmented_results, safe=False)
+
+def home(request):
+    # Accès à la page d'accueil
+    return render(request, 'main/home.html')
