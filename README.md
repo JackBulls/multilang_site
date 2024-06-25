@@ -6,11 +6,17 @@
 - Django
 - Elasticsearch
 - OpenAI SDK
-- Node.js et npm (facultatif pour l'exécution des scripts JS)
 
-## Installation
+## Installation Django 
 
-1. Clonez le dépôt :
-   ```bash
-   git clone https://github.com/votre-utilisateur/votre-repo.git
-   cd votre-repo
+```bash
+pip install django
+python -m ensurepip --default-pip // si pip n'est pas reconnu comme nom d'applet de commande
+django admin startproject multilang_site
+
+
+## Instructions pour exécuter le projet 
+
+```bash
+cd "chemin\vers\le\projet"
+python manage.py runserver
