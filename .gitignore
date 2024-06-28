@@ -1,0 +1,6 @@
+# Ignorer les fichiers de l'environnement virtuel
+env/
+venv/
+
+# Ignorer les fichiers spécifiques à Elasticsearch
+elasticsearch-8.14.1/
